@@ -1,0 +1,7 @@
+namespace is a Particular route where user is suppose to be connected without which
+they wont be able to access certain resources
+
+A Namespace is a communication channel that allows you to split the logic of your application over a single shared connection.
+
+default namespace is "/" we can have our custom namespace as "/custom-namespace" 
+it means whatever connection its goona be it will be over this custom-namespace
