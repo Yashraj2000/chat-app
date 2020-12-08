@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 var roomschema = new mongoose.Schema({
-    name:{type:String,require:true,unique:true},
+    code:{type:String,require:true,unique:true},
     roomusers:[
         {
              type:mongoose.Schema.Types.ObjectId,

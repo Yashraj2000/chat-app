@@ -30,7 +30,8 @@ module.exports = {
             const login =  util.promisify(req.login.bind(req));
             await login(user);
             // console.log(__dirname)
-            res.redirect("/rooms")
+            res.send({success:true});
+            // res.redirect("/rooms")
             // req.session.success = `Welcome back ${user.username}`;
             // const redirecturl = req.session.redirectTo || "/post";
             // delete req.session.redirectTo;
@@ -42,7 +43,8 @@ module.exports = {
             req.session.error = "The given email is not registered Please register and Log in";
             else 
             req.session.error = "Email or Password is incorrect"
-            res.redirect("/login")
+            res.send({success:false})
+            // res.redirect("/login")
 
         }
   },
@@ -72,7 +74,8 @@ module.exports = {
      req.login(users,async (err)=>{
         if(err) return next(err);
         console.log("here")
-        res.redirect("/rooms")
+        res.send("logged in ")
+        // res.redirect("/rooms")
      })
  },
  getlogout(req,res,next)
@@ -86,11 +89,16 @@ getrooms(req,res,next){
     res.render("index")
 },
 
-postrooms(req,res,next)
+async postrooms(req,res,next)
 {
     var room = req.body.room;
-    // console.log(room);
-    res.redirect("/channel?room="+room)
+    var isroom =await Rooms.findOne({code:room});
+    console.log(isroom);
+    if(isroom)
+    return res.redirect("/channel?room="+room)
+
+    req.session.error = "No such room exists Please create and join room";
+    res.redirect("back")
 
 },
 
@@ -98,7 +106,7 @@ async particularRoom (req,res,next)
 {
     var roomname = req.query;
     console.log(roomname)
-    var RoomMsg = await Rooms.findOne({name:roomname.room}).populate([{
+    var RoomMsg = await Rooms.findOne({code:roomname.room}).populate([{
         path:"roomMessages",
         options:{sort:{time:1}},
         populate:{

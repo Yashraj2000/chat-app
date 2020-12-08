@@ -3,19 +3,17 @@ const roomname = document.getElementById("room-name")
 const userlist = document.getElementById("users")
 const chatmessage = document.querySelector(".chat-messages");
 const moments = moment();
-// console.log(moments)
+
 const socket = io();
-// by default io() takes the root of the website i.e / but when we specify namespace means at certain route only we want socket.io to work then in that case we need to specify that namespace
+
 
 // Get username and room from the url window.location.search give query string
 const {room} = Qs.parse(location.search,{
     ignoreQueryPrefix:true
 })
-// console.log(Qs.parse(location.search,{
-//     ignoreQueryPrefix:true
-// })
-// )
-// console.log(username,room)
+
+
+
 
 // Join chatroom 
 socket.emit("joinRoom",{room});
@@ -55,6 +53,28 @@ chatform.addEventListener("submit",(e)=>{
     socket.emit("chatmessage",msg);
     e.target.elements.msg.value="";
     e.target.elements.msg.focus();
+})
+var timeout;
+function timeoutFunction() {
+    socket.emit("typing", false);
+  }
+document.getElementById("msg").addEventListener("keypress",function(){
+    /* so when we are typing this messsage an keypress event is fired and socket is sent 
+      and everytime cleartimeout is called to clear the time after which setTimeOut is called 
+      i.e we press key ,timer cleared ,again settimeout is called but will execute after 2 seconds
+      so if we press key before 2 sec again socket is emitted and clearTimeout will clear the time 2s for calling of set timeout and hence that function is not called 
+      but when we wait for 2 sec i.e we typed cleartimeout is called ,then settimeout is called but sice we waited for 2 or more second , clear timeout will not be called again and setTimeout will be executed
+    */
+    socket.emit("typing",true)
+    clearTimeout(timeout);
+    timeout = setTimeout(timeoutFunction,2000);
+})
+
+socket.on("istyping",function(data){
+    if(data)
+    document.getElementById("typing").innerHTML = data + " is typing";
+    else 
+    document.getElementById("typing").innerHTML = "";
 })
 
 function outputmessage(message){

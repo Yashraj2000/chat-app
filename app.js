@@ -127,6 +127,7 @@ io.use((socket, next) => {
 const botname = "Chat chat"
 // Runs when client connects
 io.on("connection",socket=>{
+  // console.log(socket)
       socket.on("joinRoom",async ({room})=>{
       var user;
       if(!userConnected(socket.request.user._id))
@@ -136,16 +137,7 @@ io.on("connection",socket=>{
       {
         user = getcurrentuser(socket.request.user._id);
       }
-      var isroom =await Rooms.findOne({name:room});
-      var newroom;
-      if(!isroom)
-      {
-        var uniquecode = makeid();
-       newroom = await Rooms.create({name:room});
-       newroom.roomusers.push(socket.request.user._id);
-       await newroom.save();
-      }
-      else {
+      var isroom =await Rooms.findOne({code:room});
         var isUserPresent = isroom.roomusers.some(function(userid){
             // console.log(userid,"==",socket.request.user._id);
             return userid.equals(socket.request.user._id);
@@ -155,7 +147,6 @@ io.on("connection",socket=>{
             isroom.roomusers.push(socket.request.user._id)
         }
         await isroom.save();
-      }
        socket.join(user.room);
       if(!userConnected(socket.request.user._id)){
        // sending message whenever user connects only to the user who connects
@@ -163,6 +154,7 @@ io.on("connection",socket=>{
            // Broadcast when user connects
     socket.broadcast.to(user.room).emit("message",formatmsg(botname,`${socket.request.user.username} has joined the chat`))
       }
+
 
 
          // all the connected clients in room
@@ -184,15 +176,33 @@ io.on("connection",socket=>{
         users:roomuser(user.room)
     })
    })
+
+   socket.on("typing",function(data){
+    const user = getcurrentuser(socket.request.user._id);
+    if(data)
+    socket.broadcast.to(user.room).emit("istyping",socket.request.user.username)
+    else 
+    socket.broadcast.to(user.room).emit("istyping",false)
+
+   })
+   
+
+        socket.on("createroom",async function(){
+          var uniquecode = makeid();
+          console.log(uniquecode)
+          await Rooms.create({code:uniquecode});
+          socket.emit("roomcreated",uniquecode)
+        })
+
        // listen for chatmessage
        socket.on("chatmessage" ,async msg=>{
         const user = getcurrentuser(socket.request.user._id);
         //console.log(user)
         var newmsg =await Messages.create({content:msg,messageSender:socket.request.user})
         // console.log(newmsg)
-        var userroom = await Rooms.findOne({name:user.room}).populate({
+        var userroom = await Rooms.findOne({code:user.room}).populate({
             path:"roomMessages",
-            options:{sort:{time:1}},
+            options:{sort:{createdAt:1}},
             populate:{
                 path:"messageSender",
                 model:"User"

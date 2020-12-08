@@ -11,41 +11,57 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="/style.css" />
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> -->
 		<title>ChatCord App</title>
 	</head>
 	<body>
 		<div class="join-container">
 			<header class="join-header">
 				<h1><i class="fas fa-smile"></i> ChatCord</h1>
+				<% if(success && success.length > 0){%>
+					<div class="container mt-3">
+					  <div class="alert alert-success alert-dismissible fade show"role="alert">
+							   <h5 class="text-center mt-1"><%=success%></h5>  
+						</div>
+					  </div>
+					  <% }if(error && error.length > 0){%>
+						<div class="container mt-3">
+						  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<h5 class="text-center mt-1"><%=error%></h5>  
+							</div>
+						</div>
+					  <%}%>
 			</header>
 			<main class="join-main">
+				<button class="btn btn-primary" id="create-room" >Create a room</button>
+				<h1 id="display-code"></h1>
 				<form action="/rooms" method="POST">
 					<div class="form-control">
-						<label for="username">Username</label>
-						<input
-							type="text"
-							name="username"
-							id="username"
-							placeholder="Enter username..."
-							required
-							disabled
-						/>
 					</div>
 					<div class="form-control">
-						<label for="room">Room</label>
-						  <p></p>
-						<select name="room" id="room">
-							<option value="JavaScript">JavaScript</option>
-							<option value="Python">Python</option>
-							<option value="PHP">PHP</option>
-							<option value="C#">C#</option>
-							<option value="Ruby">Ruby</option>
-							<option value="Java">Java</option>
-						</select>
+						<label for="room">Enter Room code</label>
+						<input type="text" name="room" required>
 					</div>
-					<button type="submit" class="btn">Join Chat</button>
+					<button type="submit" class="btn">Join Room</button>
 				</form>
 			</main>
 		</div>
+	  <script src="/socket.io/socket.io.js"></script>
+	  <script>
+		const socket = io();
+		const createroom = document.getElementById("create-room")
+		// creating dynamic room
+		createroom.addEventListener("click",function(e){
+			// e.preventDefault();
+			console.log("here")
+			socket.emit("createroom")
+		})
+
+		// getting unique code
+		socket.on("roomcreated",data=>{
+			createroom.style.display = "none";
+			document.getElementById("display-code").innerHTML = data;
+		})
+	  </script> 
 	</body>
 </html>

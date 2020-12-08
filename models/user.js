@@ -3,6 +3,7 @@ const passportlocalmongoose = require("passport-local-mongoose");
 
 var userschema = new mongoose.Schema({
     email:{type:String,unique:true,required:true},
+    isverified:{type:Boolean,default:false},
     username:{type:String,unique:true,require:true},
     fullname:{type:String,required:true}
 },{timestamps:true})
