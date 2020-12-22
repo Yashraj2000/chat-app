@@ -30,7 +30,8 @@ module.exports = {
             const login =  util.promisify(req.login.bind(req));
             await login(user);
             // console.log(__dirname)
-            res.send({success:true});
+            //res.send({success:true});
+            res.status(200).send(user)
             // res.redirect("/rooms")
             // req.session.success = `Welcome back ${user.username}`;
             // const redirecturl = req.session.redirectTo || "/post";
@@ -43,7 +44,7 @@ module.exports = {
             req.session.error = "The given email is not registered Please register and Log in";
             else 
             req.session.error = "Email or Password is incorrect"
-            res.send({success:false})
+            res.status(400).send({success: false})
             // res.redirect("/login")
 
         }
