@@ -59,7 +59,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-const server = app.listen(4000,()=>{
+const server = app.listen(process.env.PORT || 4000,()=>{
     console.log("server started at port 4000")
 })
 
