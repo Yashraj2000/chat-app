@@ -24,3 +24,4 @@ jobs:
     - run: npm test
       env: 
         DATABASE_URL: mongodb+srv://srjsnehanshu:chatcord123@chatcordcluster.d1vwp.mongodb.net/<dbname>?retryWrites=true&w=majority
+        CI: true

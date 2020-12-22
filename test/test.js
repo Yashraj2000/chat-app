@@ -45,10 +45,10 @@ describe('Tasks API', () => {
         it("It should POST a new task", function(done) {
             this.timeout(10000)
             const task = {
-                username: "user15",
+                username: "user16",
                 fullname: "full name",
                 password: 1234568,
-                email: "user15email@gmail.com"
+                email: "user16email@gmail.com"
             };
             chai.request(server)                
                 .post("/register")
