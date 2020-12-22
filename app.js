@@ -30,7 +30,8 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static("public"));
 
 // database connection 
-mongoose.connect('mongodb://localhost:27017/chat-app', {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true,useFindAndModify:false });
+var url = process.env.DATABASE_URL || 'mongodb://localhost:27017/chat-app';
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true,useFindAndModify:false });
 var db = mongoose.connection;
 db.on('error',console.error.bind(console,"conncetion error"));
 db.once('open',function(){
