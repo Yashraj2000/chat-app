@@ -37,7 +37,7 @@ io.on("connection",socket=>{
 //     callback();
 // })
   console.log(socket.handshake)
-
+  console.log('check1')
    // Join room since we are passing an object from front-end here rather than taking the object as it is we are descructuring it
    socket.on("joinRoom",({username,room})=>{
       const user = userjoin(socket.id,username,room);
