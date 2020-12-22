@@ -44,10 +44,10 @@ describe('Tasks API', () => {
     describe("POST to /register", () => {
         it("It should POST a new task", (done) => {
             const task = {
-                username: "user4",
+                username: "user5",
                 fullname: "full name",
                 password: 1234568,
-                email: "user4email@gmail.com"
+                email: "user5email@gmail.com"
             };
             chai.request(server)                
                 .post("/register")
