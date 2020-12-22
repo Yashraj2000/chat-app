@@ -1,4 +1,5 @@
 // socket.io should be used both in client side(browser) and server side(backend)
+require('dotenv').config()
 const express = require("express");
 const createError = require('http-errors');
 const session = require("express-session");
