@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
-console.log('test1)
 
 // requiring models
 const User = require("./models/user");
@@ -89,7 +88,7 @@ app.use(function(req, res, next) {
   app.use(function(err, req, res, next) {
     console.log(err, "in error handler ");
     req.session.error = err.message;
-    res.redirect("/");
+    res.status(404).send('error message');
   });
 
 
@@ -248,3 +247,4 @@ function makeid(length = 6) {
   return result;
 }
 
+module.exports = app

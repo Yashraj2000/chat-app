@@ -52,7 +52,8 @@ module.exports = {
   async postregister(req,res,next){
     let error;
     const{username,email,fullname} = req.body;
-    if(req.body.password.length<6)
+    console.log(req.body)
+    if(req.body.password.length < 6)
     {
         error = "Password must be 6 digit long";
         return res.render("register",{error,username,email,fullname})
@@ -75,7 +76,8 @@ module.exports = {
      req.login(users,async (err)=>{
         if(err) return next(err);
         console.log("here")
-        res.send("logged in ")
+        //res.send("logged in ")
+        res.status(200).send(users)
         // res.redirect("/rooms")
      })
  },
