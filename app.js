@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
-console.log('test1')
+console.log('test1)
 
 // requiring models
 const User = require("./models/user");
