@@ -32,12 +32,14 @@ app.use(express.static("public"));
 
 // database connection 
 var url = process.env.DATABASE_URL || 'mongodb://localhost:27017/chat-app';
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true,useFindAndModify:false });
-var db = mongoose.connection;
-db.on('error',console.error.bind(console,"conncetion error"));
-db.once('open',function(){
-  console.log("connected to database")
-})
+(async function(){
+  mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true,useFindAndModify:false });
+  var db = mongoose.connection;
+  db.on('error',console.error.bind(console,"conncetion error"));
+  db.once('open',function(){
+    console.log("connected to database")
+  })
+})()
 
 // Passport Configuration
 const sessionMiddleware = session({ secret: "This can be anything", resave: false, saveUninitialized: false });

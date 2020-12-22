@@ -42,31 +42,30 @@ describe('Tasks API', () => {
 //      * Test the POST route
 //      */
     describe("POST to /register", () => {
-        it("It should POST a new task", (done) => {
+        it("It should POST a new task", function(done) {
+            this.timeout(10000)
             const task = {
-                username: "user5",
+                username: "user13",
                 fullname: "full name",
                 password: 1234568,
-                email: "user5email@gmail.com"
+                email: "user13email@gmail.com"
             };
             chai.request(server)                
                 .post("/register")
                 .set('content-type', 'application/x-www-form-urlencoded')
                 .send(task)
                 .end((err, response) => {
-                    console.log(response)
                     response.should.have.status(200);
                     response.body.should.be.a('object');
                     // response.body.should.have.property('_id').eq(4);
                     response.body.should.have.property('username');
-                    response.body.should.have.property('fullname')
-                    response.body.should.have.property('email')
+                    response.body.should.have.property('fullname');
+                    response.body.should.have.property('email');
                 done();
                 });
         });
 
      });
-
  });
 
 
