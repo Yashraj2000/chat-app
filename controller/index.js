@@ -62,7 +62,8 @@ module.exports = {
     if(user)
     {
         error = "User with given Email already exists";
-        return res.render("register",{error,username,fullname})
+        // return res.render("register",{error,username,fullname})
+        return res.status(400).send({success: false})
     }
      user = await User.findOne({username:req.body.username});
      if(user)

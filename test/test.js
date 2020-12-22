@@ -45,7 +45,7 @@ describe('Tasks API', () => {
         it("It should POST a new task", function(done) {
             this.timeout(10000)
             const task = {
-                username: "user18",
+                username: "user19",
                 fullname: "full name",
                 password: 1234568,
                 email: "user18email@gmail.com"
