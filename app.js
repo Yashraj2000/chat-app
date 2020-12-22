@@ -101,7 +101,6 @@ app.use(function(req, res, next) {
 
 
 
-
 // server side socket connection
 var io = socket(server);
 
