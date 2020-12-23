@@ -19,6 +19,7 @@ describe('Tasks API', () => {
             chai.request(server)
                 .get("/")
                 .end((err, response) => {
+                    //console.log(response)
                     response.should.have.status(200);
                     assert.equal(response.text, "Welocme to the landing page")
                     // response.body.should.be.a('array');
