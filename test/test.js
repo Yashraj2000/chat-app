@@ -51,7 +51,7 @@ describe('Tasks API', () => {
                 password: 1234568,
                 email: "user22email@gmail.com"
             };
-            chai.request(server)                
+            chai.request(server             
                 .post("/register")
                 .set('content-type', 'application/x-www-form-urlencoded')
                 .send(task)
