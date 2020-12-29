@@ -46,12 +46,12 @@ describe('Tasks API', () => {
         it("It should POST a new task", function(done) {
             this.timeout(10000)
             const task = {
-                username: "user22",
+                username: "user23",
                 fullname: "full name",
                 password: 1234568,
-                email: "user22email@gmail.com"
+                email: "user23email@gmail.com"
             };
-            chai.request(server             
+            chai.request(server)                
                 .post("/register")
                 .set('content-type', 'application/x-www-form-urlencoded')
                 .send(task)
@@ -73,7 +73,7 @@ describe('Tasks API', () => {
             this.timeout(10000)
             const task = {
                 password: 1234568,
-                email: "user22email@gmail.com"
+                email: "user23email@gmail.com"
             };
             chai.request(server)                
                 .post("/login")
