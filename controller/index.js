@@ -67,6 +67,7 @@ module.exports = {
      if(user)
      {
          error = "User with given username already exists";
+         console.log('user')
          return res.render("register",{error,email,fullname})
      }
      const users = await User.register(new User(req.body), req.body.password);
