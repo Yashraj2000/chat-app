@@ -3,7 +3,6 @@ let chaiHttp = require("chai-http");
 let server = require("../app");
 const assert = require("chai").assert
 
-
 //Assertion Style
 chai.should();
 
@@ -46,10 +45,10 @@ describe('Tasks API', () => {
         it("It should POST a new task", function(done) {
             this.timeout(10000)
             const task = {
-                username: "user25",
+                username: "user27",
                 fullname: "full name",
                 password: 1234568,
-                email: "user25email@gmail.com"
+                email: "user27email@gmail.com"
             };
             chai.request(server)                
                 .post("/register")
@@ -73,7 +72,7 @@ describe('Tasks API', () => {
             this.timeout(10000)
             const task = {
                 password: 1234568,
-                email: "user25email@gmail.com"
+                email: "user28email@gmail.com"
             };
             chai.request(server)                
                 .post("/login")
