@@ -7,6 +7,8 @@ const middleware = {
         {
             return next();
         }
+        console.log(req.headers.referer)
+        req.session,redirectTo = req.originalUrl
         res.redirect("/login");
     }
 

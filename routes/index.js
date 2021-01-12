@@ -8,7 +8,7 @@ const {getregister,getlogin,postlogin,postregister,getlogout,getrooms,postrooms,
 
 
 router.get("/",function(req,res){
-    res.send("Welocme to the landing page")
+    res.send("Welcome to the landing page")
 })
 
 
@@ -22,7 +22,7 @@ router.post("/register",errorHandler(postregister));
 
 router.get("/logout",getlogout)
 
-router.get("/rooms",getrooms)
+router.get("/rooms",isloggedIn,getrooms)
 
 router.post("/rooms",postrooms)
 
